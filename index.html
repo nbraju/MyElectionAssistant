@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="te" data-ll="te"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Election Assistant · నా ఎన్నికల సహాయకుడు</title>
+<script>window.onerror=function(m,u,l){var a=document.getElementById("app");if(a)a.innerHTML='<div style="padding:18px;font-family:sans-serif"><h2>⚠ Error</h2><p style="word-break:break-word">'+String(m)+" (line "+l+")</p><p>Send this message to your developer.</p><button style=\"font-size:20px;padding:14px;width:100%\" onclick=\"try{localStorage.clear()}catch(e){};location.reload()\">Reset saved data and reload</button></div>"};</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+:root{--bg:#f1f4f3;--sf:#fff;--tx:#1b2238;--mu:#5d6680;--ink:#2b2f7e;--ink-t:#fff;--ln:#d9dee6;--A:#1f8a4c;--B:#c98a00;--C:#2a6fc9;--D:#c43b3b;--ok:#e3f3ea;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10131f;--sf:#1b2033;--tx:#eef0f8;--mu:#9aa3bd;--ink:#8d92ff;--ink-t:#10131f;--ln:#2f3652;--A:#4cc98a;--B:#e9b73a;--C:#6aa5f0;--D:#f07878;--ok:#17352a}}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Noto Sans Telugu',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:18px;line-height:1.45}
+#app{max-width:520px;margin:0 auto;padding:12px 14px 96px}
+h1{font-size:22px;font-weight:800}h2{font-size:20px;font-weight:800;margin:6px 0 10px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;margin-bottom:12px}
+.mu{color:var(--mu);font-size:15px}
+.btn{display:block;width:100%;min-height:56px;border:0;border-radius:14px;background:var(--ink);color:var(--ink-t);font:inherit;font-weight:800;font-size:19px;padding:12px;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.btn.sm{min-height:48px;font-size:17px;width:auto;padding:8px 16px}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input,select,textarea{width:100%;min-height:54px;font:inherit;font-size:19px;color:var(--tx);background:var(--sf);border:2px solid var(--ln);border-radius:12px;padding:10px 12px}
+input:focus,select:focus,textarea:focus,.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.row{display:flex;gap:8px;align-items:center}.row>*{flex:1}
+.big{font-size:44px;font-weight:800;line-height:1.05;color:var(--ink)}
+.bar{height:16px;background:var(--ln);border-radius:9px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--A);border-radius:9px}
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.cat{min-height:50px;border-radius:12px;border:2px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;font-weight:800;font-size:20px}
+.cat.on{color:#fff;border-color:transparent}
+.cat.on.A{background:var(--A)}.cat.on.B{background:var(--B)}.cat.on.C{background:var(--C)}.cat.on.D{background:var(--D)}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px}
+.chip{flex:none;min-height:46px;padding:6px 16px;border-radius:23px;border:2px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;font-weight:600}
+.chip.on{background:var(--ink);color:var(--ink-t);border-color:var(--ink)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--sf);border-top:1px solid var(--ln);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+.tab{flex:1;min-height:64px;border:0;background:none;color:var(--mu);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.tab b{display:block;font-size:26px;line-height:1.1}.tab.on{color:var(--ink)}
+.chk{display:flex;gap:12px;align-items:center;min-height:56px;border-bottom:1px solid var(--ln)}
+.chk input{width:30px;min-height:30px;flex:none}
+.done{background:var(--ok)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.x{border:0;background:none;color:var(--D);font:inherit;font-size:15px;min-height:44px;padding:0 6px}
+a.call{color:var(--ink);font-weight:800;text-decoration:none}
+#md{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end}#md.on{display:flex}
+.sheet{background:var(--sf);width:100%;max-width:520px;margin:0 auto;border-radius:22px 22px 0 0;padding:16px;max-height:92%;overflow:auto}
+#tip{position:fixed;display:none;z-index:30;max-width:78vw;background:var(--tx);color:var(--bg);padding:10px 14px;border-radius:12px;font-size:16px;font-weight:600}
+#tip::after{content:'';position:absolute;left:var(--ax);margin-left:-8px;border:8px solid transparent}
+#tip.up::after{top:100%;border-top-color:var(--tx)}#tip.dn::after{bottom:100%;border-bottom-color:var(--tx)}
+#hb{position:fixed;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;border:2px solid var(--ink);background:var(--sf);box-shadow:0 2px 8px #0004;font-size:24px;z-index:6}#hb.on{background:var(--ink)}
+canvas#cv{width:100%;border-radius:16px;box-shadow:0 4px 18px #0003;margin-top:10px;background:#fff}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mg .btn{min-height:110px;font-size:20px}
+@page{size:A5;margin:0}
+@media print{body *{visibility:hidden}#cv{visibility:visible;position:fixed;left:0;top:0;width:148mm;height:210mm;border-radius:0;box-shadow:none;margin:0}}
+</style><style>
+html[data-ll="en"] .te{display:none}html[data-ll="te"] .en{display:none}
+#land{position:fixed;inset:0;overflow-y:auto;z-index:1000;background:var(--bg);color:var(--tx);font-family:'Noto Sans Telugu',system-ui,sans-serif;font-size:18px;line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#land .lw{max-width:980px;margin:0 auto;padding:0 18px}
+#land .lh{background:linear-gradient(160deg,#23266a 0%,#3b2f9e 60%,#5a3fb5 100%);color:#fff;padding-bottom:26px;border-bottom-left-radius:28px;border-bottom-right-radius:28px}
+#land .lbar{display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-size:19px}
+#land .llang{min-height:44px;padding:6px 16px;border-radius:22px;border:2px solid rgba(255,255,255,.7);background:transparent;color:#fff;font:inherit;font-weight:600;cursor:pointer}
+#land .lhero{display:grid;gap:22px;align-items:center;padding:8px 0 4px}
+#land .lbadge{display:inline-block;background:#ff9933;color:#1b2238;font-weight:800;border-radius:20px;padding:4px 14px;font-size:15px;margin-bottom:10px}
+#land h1{font-size:30px;line-height:1.25;font-weight:800;margin:0 0 10px}
+#land .lcopy p{font-size:19px;opacity:.95;margin-bottom:18px}
+#land .cta,#land .cta2{display:block;width:100%;max-width:420px;min-height:58px;border-radius:16px;font:inherit;font-weight:800;font-size:19px;padding:12px 16px;cursor:pointer;text-align:center;text-decoration:none;margin-bottom:12px}
+#land .cta{border:0;background:#ff9933;color:#1b2238}
+#land .cta2{border:2px solid rgba(255,255,255,.8);background:transparent;color:#fff}
+#land .lnote{font-size:15px;opacity:.85}
+#land .phone{justify-self:center;width:250px;background:#10131f;border:6px solid #0a0c15;border-radius:30px;padding:14px 12px 16px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+#land .pn{width:60px;height:6px;border-radius:3px;background:#2f3652;margin:0 auto 12px}
+#land .pc{background:#fff;color:#1b2238;border-radius:14px;padding:10px 12px;margin-bottom:10px}
+#land .pm{font-size:13px;color:#5d6680}#land .pbig{font-size:38px;font-weight:800;color:#2b2f7e;line-height:1.1}
+#land .pbar{height:12px;background:#d9dee6;border-radius:7px;overflow:hidden;margin:6px 0}#land .pbar i{display:block;width:62%;height:100%;background:#1f8a4c}
+#land .pk{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:13px;font-weight:600}#land .pk u{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}
+#land .ltr{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+#land .lt{background:rgba(255,255,255,.14);border-radius:18px;padding:6px 14px;font-size:15px}
+#land .lsec{font-size:24px;font-weight:800;margin:32px 0 14px;color:var(--tx)}
+#land .lgrid{display:grid;gap:12px}
+#land .lc{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px}
+#land .li{font-size:30px}#land .lc h3{font-size:20px;font-weight:800;margin:4px 0}#land .lc p{color:var(--mu);font-size:16px}
+#land .lsteps{display:grid;gap:10px}
+#land .ls{display:flex;gap:14px;align-items:center;background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:14px}
+#land .ls b{flex:none;width:42px;height:42px;border-radius:50%;background:var(--ink);color:var(--ink-t);display:flex;align-items:center;justify-content:center;font-size:20px}
+#land .lfin{margin:28px 0 8px}
+#land .lfin .cta{background:var(--ink);color:var(--ink-t)}
+#land .lfin .cta2{border-color:var(--ink);color:var(--ink)}
+#land .ldis{color:var(--mu);font-size:14px;padding:12px 0 36px}
+@media(min-width:720px){#land .lhero{grid-template-columns:1.3fr 1fr}#land h1{font-size:40px}#land .lgrid{grid-template-columns:repeat(3,1fr)}#land .lsteps{grid-template-columns:repeat(3,1fr)}#land .ls{flex-direction:column;text-align:center}}
+#land button:focus-visible,#land a:focus-visible{outline:3px solid #ff9933;outline-offset:2px}
+</style></head><body><div id="land">
+<div class="lh"><div class="lw">
+<div class="lbar"><b>🗳️ My Election Assistant</b><button class="llang" onclick="landLang()" aria-label="Language"><span class="te">English</span><span class="en">తెలుగు</span></button></div>
+<div class="lhero">
+<div class="lcopy">
+<div class="lbadge"><span class="te">నా ఎన్నికల సహాయకుడు</span><span class="en">నా ఎన్నికల సహాయకుడు</span></div>
+<h1><span class="te">మీ సర్పంచ్ ప్రచారం — ఇప్పుడు మీ ఫోన్‌లోనే</span><span class="en">Run your Sarpanch campaign from your phone</span></h1>
+<p><span class="te">ఇంటింటి ప్రచారం, ఓట్ల లెక్క, ఖర్చులు, పోలింగ్ రోజు — అన్నీ ఒకే సులభమైన యాప్‌లో.</span><span class="en">Door-to-door visits, vote count, expenses and poll day — all in one simple app.</span></p>
+<button class="cta" onclick="goApp()"><span class="te">డెమో మొదలుపెట్టండి</span><span class="en">Start the demo</span> →</button>
+<button class="cta2" onclick="loadDemo()"><span class="te">నమూనా డేటాతో చూడండి</span><span class="en">See it with sample data</span></button>
+<div class="lnote"><span class="te">నమూనా డేటాను ‘మరిన్ని ▸ రీసెట్’ లో ఎప్పుడైనా తొలగించవచ్చు.</span><span class="en">Remove sample data any time from More ▸ Reset.</span></div>
+</div>
+<div class="phone" aria-hidden="true"><div class="pn"></div>
+<div class="pc"><div class="pm"><span class="te">ఎన్నికకు మిగిలిన రోజులు</span><span class="en">Days to poll</span></div><div class="pbig">14</div></div>
+<div class="pc"><div class="pm"><span class="te">గెలుపుకు కావలసిన ఓట్లు</span><span class="en">Votes needed to win</span></div><div class="pbig">241</div><div class="pbar"><i></i></div><div class="pk"><span><u style="background:#1f8a4c"></u>A 118</span><span><u style="background:#c98a00"></u>B 62</span><span><u style="background:#2a6fc9"></u>C 71</span><span><u style="background:#c43b3b"></u>D 29</span></div></div>
+</div></div>
+<div class="ltr"><span class="lt">📴 <span class="te">ఇంటర్నెట్ లేకుండా పని చేస్తుంది</span><span class="en">Works offline</span></span><span class="lt">🔒 <span class="te">మీ డేటా మీ ఫోన్‌లోనే</span><span class="en">Your data stays on your phone</span></span><span class="lt">🌐 <span class="te">తెలుగు + English</span><span class="en">Telugu + English</span></span><span class="lt">☁️ <span class="te">గూగుల్ షీట్ బ్యాకప్ (ఐచ్ఛికం)</span><span class="en">Google Sheet backup (optional)</span></span></div>
+</div></div>
+<div class="lw"><h2 class="lsec"><span class="te">యాప్‌లో ఏముంది</span><span class="en">What you get</span></h2><div class="lgrid"><div class="lc"><div class="li">🏠</div><h3><span class="te">ఇంటింటి ట్రాకర్</span><span class="en">Door-to-door tracker</span></h3><p><span class="te">ప్రతి ఇంటికి A/B/C/D మార్కింగ్, సందర్శనలు, నోట్స్</span><span class="en">Mark every home A/B/C/D, log visits and notes</span></p></div><div class="lc"><div class="li">🎯</div><h3><span class="te">గెలుపు లక్ష్యం</span><span class="en">Votes to win</span></h3><p><span class="te">గెలుపుకు కావలసిన ఓట్లు, వార్డుల వారీ ప్రగతి</span><span class="en">Votes you need and ward-wise progress</span></p></div><div class="lc"><div class="li">💰</div><h3><span class="te">ఖర్చుల లెక్క</span><span class="en">Expense tracker</span></h3><p><span class="te">పరిమితి దాటకుండా హెచ్చరిక</span><span class="en">Stay under your spending limit with alerts</span></p></div><div class="lc"><div class="li">🗳️</div><h3><span class="te">పోలింగ్ రోజు</span><span class="en">Poll-day tracker</span></h3><p><span class="te">ఓటు వేసిన / వేయని మద్దతుదారుల జాబితా</span><span class="en">See which supporters have voted and who is left</span></p></div><div class="lc"><div class="li">🖼️</div><h3><span class="te">కరపత్రం డిజైనర్</span><span class="en">Pamphlet designer</span></h3><p><span class="te">ఫోటో, గుర్తు, హామీలతో పోస్టర్ — ప్రింట్ లేదా PNG</span><span class="en">Poster with photo, symbol and promises — print or PNG</span></p></div><div class="lc"><div class="li">💬</div><h3><span class="te">వాట్సాప్ సాధనాలు</span><span class="en">WhatsApp tools</span></h3><p><span class="te">సందేశాలు, రిపోర్టులు ఒక్క టచ్‌తో</span><span class="en">Messages and reports in one tap</span></p></div></div>
+<h2 class="lsec"><span class="te">ఎలా పని చేస్తుంది</span><span class="en">How it works</span></h2><div class="lsteps"><div class="ls"><b>1</b><span><span class="te">మీ పంచాయతీ వివరాలు నింపండి (ఒక్కసారి)</span><span class="en">Enter your panchayat details (once)</span></span></div><div class="ls"><b>2</b><span><span class="te">ఇళ్లను చేర్చి A/B/C/D మార్క్ చేయండి</span><span class="en">Add homes and mark A/B/C/D</span></span></div><div class="ls"><b>3</b><span><span class="te">రోజూ ట్రాక్ చేయండి; పోలింగ్ రోజు మద్దతుదారులను రప్పించండి</span><span class="en">Track daily; on poll day, bring your supporters out</span></span></div></div>
+<div class="lfin"><button class="cta" onclick="goApp()"><span class="te">ఇప్పుడే ప్రయత్నించండి</span><span class="en">Try it now</span> →</button>
+<a id="contact" class="cta2 ca" href="#" target="_blank" rel="noopener" style="display:none">💬 <span class="te">మీ పంచాయతీకి కావాలా? WhatsApp లో సంప్రదించండి</span><span class="en">Want it for your panchayat? Chat on WhatsApp</span></a></div>
+<p class="ldis"><span class="te">డెమోలో మీరు నమోదు చేసిన వివరాలు ఈ బ్రౌజర్‌లోనే ఉంటాయి. ఇది స్వతంత్ర ప్రచార సాధనం; ఏ ఎన్నికల అధికారంతోనూ సంబంధం లేదు.</span><span class="en">Details you enter in this demo stay in this browser. This is an independent campaign tool, not affiliated with any election authority.</span></p>
+</div></div><noscript><p style="padding:20px;font-size:20px">JavaScript is turned off in this browser. Please turn it on.</p></noscript><div id="app"><p style="padding:20px;font-size:20px;font-family:sans-serif">⏳ Loading…</p></div><nav id="nav"></nav><div id="md"></div><div id="tip"></div><button id="hb" onclick="helpT()" data-tip="సహాయం ఆన్/ఆఫ్: ఆన్‌లో బటన్ నొక్కితే వివరణ|Help on/off: when on, tap a button to see what it does">❓</button>
+<script>
+var K='myea_demo_v1',S,view='home',flt='all',wardF=0,pollF='todo';
+var T={
+ app:['నా ఎన్నికల సహాయకుడు','My Election Assistant'],setup:['మీ వివరాలు (ఒక్కసారి)','Your details (one time)'],
+ gp:['గ్రామ పంచాయతీ పేరు','Gram Panchayat name'],pop:['జనాభా','Population'],vot:['మొత్తం ఓటర్లు','Total voters'],wd:['వార్డుల సంఖ్య','Number of wards'],
+ res:['సర్పంచ్ స్థానం రిజర్వేషన్','Sarpanch seat reservation'],opp:['ప్రత్యర్థులు (పేర్లు)','Likely opponents (names)'],bg:['మీ నేపథ్యం (సేవ, వృత్తి, కుటుంబం)','Your background (service, work, family)'],
+ start:['ప్రారంభించండి','Start'],home:['హోమ్','Home'],hh:['ఇళ్లు','Homes'],poll:['పోలింగ్','Poll day'],money:['ఖర్చు','Money'],team:['టీమ్','Team'],
+ pd:['పోలింగ్ తేదీ','Poll date'],days:['రోజులు మిగిలాయి','days left'],tgt:['గెలవడానికి కావలసిన ఓట్లు (అంచనా)','Votes needed to win (estimate)'],
+ sure:['మీ ఓట్లు (A ఇళ్లు)','Your sure votes (A homes)'],lean:['వచ్చే అవకాశం (B)','Likely (B)'],und:['తేలనివి (C)','Undecided (C)'],opn:['ప్రత్యర్థి (D)','Opponent (D)'],
+ wards:['వార్డుల వారీ','Ward by ward'],tasks:['ఈ రోజు చేయాల్సినవి','To-do list'],add:['ఇల్లు చేర్చండి','Add home'],headn:['ఇంటి పెద్ద పేరు','Head of home'],
+ nv:['ఓటర్ల సంఖ్య','Voters in home'],ward:['వార్డు','Ward'],all:['అన్నీ','All'],visit:['సందర్శన','Visit'],save:['సేవ్ చేయండి','Save'],del:['తొలగించు','Delete'],
+ voted:['ఓటు వేశారు','Voted'],todo:['ఇంకా వేయలేదు','Not yet'],did:['వేశారు','Done'],prog:['ఓటు వేసిన మీ మద్దతుదారులు','Your supporters who voted'],
+ lim:['ఖర్చు పరిమితి (₹)','Spending limit (₹)'],amt:['మొత్తం (₹)','Amount (₹)'],note:['దేనికి?','For what?'],spent:['ఖర్చయింది','Spent'],left:['మిగిలింది','Left'],
+ nm:['పేరు','Name'],ph:['ఫోన్','Phone'],role:['పని','Job'],edit:['వివరాలు మార్చండి','Edit details'],lang:['English','తెలుగు'],none:['ఇంకా ఏమీ లేదు. పైన చేర్చండి.','Nothing yet. Add above.'],
+ warn:['⚠ పరిమితి దాటబోతోంది','⚠ Close to limit'],hint9:['ఉదయం 9 కల్లా 30% ఓటింగ్','By 9 am: 30% voted'],hint11:['11 కల్లా 60%','By 11: 60%'],hint12:['12 తర్వాత మిగిలిన వారికి ఫోన్, వాహనం','After 12: call and send vehicles'],
+ conf:['నిజంగా తొలగించాలా?','Really delete?'],rst:['మొత్తం డేటా తొలగించు','Erase all data'],note1:['అంచనా: 80% పోలింగ్. SEC నిబంధనలు చూసుకోండి.','Estimate assumes 80% turnout. Check SEC rules.']
+};
+var RES=[['జనరల్','General'],['జనరల్ మహిళ','General Woman'],['బీసీ','BC'],['బీసీ మహిళ','BC Woman'],['ఎస్సీ','SC'],['ఎస్సీ మహిళ','SC Woman'],['ఎస్టీ','ST'],['ఎస్టీ మహిళ','ST Woman']];
+var TASKS=[['నామినేషన్ పత్రాలు సరిచూడండి','Check nomination papers'],['ఓటర్ల జాబితా తెచ్చుకోండి','Get voter list'],['వార్డు కెప్టెన్లను నియమించండి','Appoint ward captains'],['అన్ని ఇళ్లకు A/B/C/D వేయండి','Mark every home A/B/C/D'],['3 వాగ్దానాలు నిర్ణయించండి','Fix 3 promises'],['మహిళా సంఘాల సమావేశం','Meet women/SHG groups'],['ప్రతి ఇంటికి 3 సార్లు వెళ్లండి','Visit each home 3 times'],['వలస ఓటర్లకు ఫోన్ చేయండి','Call migrant voters'],['ఓటర్ స్లిప్పులు పంచండి','Give voter slips'],['బూత్ ఏజెంట్లకు శిక్షణ','Train booth agents'],['ఖర్చు రిజిస్టర్ రోజూ రాయండి','Write expenses daily']];
+function t(k){return T[k][S.lang==='en'?1:0]}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var MEM={};function sg(){try{return localStorage.getItem(K)}catch(e){return MEM.v||null}}function ss(v){try{localStorage.setItem(K,v)}catch(e){MEM.v=v}}
+function load(){try{S=JSON.parse(sg())}catch(e){S=null}
+ if(!S)S={lang:'te',p:null,hh:[],team:[],exp:[],limit:0,date:'',chk:{},g:{},url:'',d:{}}
+ S.g=S.g||{};S.url=S.url||'';S.d=S.d||{};S.log=S.log||[];S.key=S.key||'';S.pin=S.pin||'';norm()}
+function save(){S.mod=Date.now();S.dirty=1;persist();clearTimeout(tm);if(S.url)tm=setTimeout(push,2500)}
+function go(v){view=v;render();window.scrollTo(0,0)}
+function setLang(){S.lang=S.lang==='en'?'te':'en';save();render()}
+function nid(){return Date.now()+Math.floor(Math.random()*999)}
+function sumV(c,w){return S.hh.filter(function(h){return h.c===c&&(!w||h.w===w)}).reduce(function(a,h){return a+h.n},0)}
+
+var DEF={gp:'Sample Village',po:'Sample Village',ps:'Sample',mdl:'Sample Mandal',sdv:'Sample Division',dst:'Sample District',pinc:'000000',pst:'Govt. School, Sample Village',psa:'Sample Village',pty:'General',mal:300,fem:300,thr:0,vot:600,wards:[['Ward 1',1,150],['Ward 2',151,300],['Ward 3',301,450],['Ward 4',451,600]]};
+Object.assign(T,{defb:['నమూనా వివరాలు నింపండి','Fill sample details'],po:['పోస్ట్ ఆఫీస్','Post Office'],ps:['పోలీస్ స్టేషన్','Police Station'],mdl:['తహసీల్ (మండలం)','Tehsil'],sdv:['సబ్ డివిజన్','Subdivision'],dst:['జిల్లా','District'],pinc:['పిన్ కోడ్','PIN code'],pst:['పోలింగ్ కేంద్రం (నం. & పేరు)','Polling station (no. & name)'],psa:['చిరునామా','Address'],pty:['రకం','Type'],mal:['పురుషులు','Male'],fem:['మహిళలు','Female'],thr:['ఇతరులు','Third gender'],wds:['వార్డులు (పేరు, నుండి, వరకు క్రమ సంఖ్య)','Wards (name, from, to serial)'],sl:['ఓటరు క్రమ సంఖ్య (ఉదా. 120)','Voter serial no. (e.g. 120)'],cov:['నమోదు','Mapped'],badsl:['ఈ క్రమ సంఖ్య ఈ వార్డు పరిధిలో లేదు. అయినా చేర్చాలా?','Serial no. is outside this ward. Add anyway?'],det:['పంచాయతీ వివరాలు','Panchayat details']});
+function wardsOf(a,D){if(D)return D.wards.map(function(w){return{name:w[0],from:w[1],to:w[2]}});return(S.p&&S.p.wards)||[]}
+function wname(w){return((S.p.wards||[])[w-1]||{}).name||''}
+function wl(w){var n=wname(w);return w+(n?' · '+n:'')}
+function el(w){var r=(S.p.wards||[])[w-1];return r&&r.to?r.to-r.from+1:Math.round(S.p.vot/S.p.wd)}
+function sumAllV(w){return S.hh.filter(function(h){return h.w===w}).reduce(function(a,h){return a+h.n},0)}
+function cov(w){return Math.min(100,Math.round(sumAllV(w)/el(w)*100))}
+function wopts(){return Array.apply(null,Array(S.p.wd)).map(function(_,i){return'<option value="'+(i+1)+'">'+esc(wl(i+1))+'</option>'}).join('')}
+function inR(w,sl){var r=(S.p.wards||[])[w-1],n=parseInt(sl,10);return!r||!n||(n>=r.from&&n<=r.to)}
+function psCard(){var p=S.p;return p.pst?'<div class="card"><b>🏫 '+esc(p.pst)+'</b><div class="mu">'+esc(p.psa)+' · '+esc(p.pty)+'</div></div>':''}
+function detCard(){var p=S.p;return'<div class="card"><h2>'+t('det')+'</h2>'+[['po',p.po],['ps',p.ps],['mdl',p.mdl],['sdv',p.sdv],['dst',p.dst],['pinc',p.pinc],['mal',p.mal],['fem',p.fem],['thr',p.thr],['vot',p.vot]].map(function(x){return x[1]!=null&&x[1]!==''?'<div class="row" style="min-height:34px"><span class="mu" style="flex:3">'+t(x[0])+'</span><b style="flex:3">'+esc(x[1])+'</b></div>':''}).join('')+'</div>'}
+function setup(){var p=S.p||{},v=function(k){return p[k]!=null?p[k]:''},o=p.opp||['','',''],W=wardsOf();
+ return'<h1>🗳 '+t('app')+'</h1><div class="card"><h2>'+t('setup')+'</h2>'+f('gp',v('gp'))+f('po',v('po'))+f('ps',v('ps'))+f('mdl',v('mdl'))+f('sdv',v('sdv'))+f('dst',v('dst'))+f('pinc',v('pinc'))+f('pop',p.pop,'number')+f('vot',v('vot'),'number')+f('mal',v('mal'),'number')+f('fem',v('fem'),'number')+f('thr',v('thr'),'number')+'</div>'+
+ '<div class="card"><h2>🏫 '+t('pst')+'</h2>'+f('pst',v('pst'))+f('psa',v('psa'))+f('pty',v('pty'))+'</div>'+
+ '<div class="card"><h2>'+t('wds')+'</h2>'+(W.length?W.concat([{},{}]):[{},{},{},{},{},{},{},{}]).map(function(w,i){return'<div class="row" style="margin-bottom:8px"><input id="wn'+i+'" style="flex:3" value="'+esc(w.name)+'"><input id="wf'+i+'" type="number" inputmode="numeric" value="'+esc(w.from)+'"><input id="wt'+i+'" type="number" inputmode="numeric" value="'+esc(w.to)+'"></div>'}).join('')+'</div>'+
+ '<div class="card"><label style="margin-top:0">'+t('res')+'</label><select id="res">'+RES.map(function(r,i){return'<option value="'+i+'"'+(p.res==i?' selected':'')+'>'+r[S.lang==='en'?1:0]+'</option>'}).join('')+'</select><label>'+t('opp')+'</label><input id="o0" value="'+esc(o[0])+'"><input id="o1" style="margin-top:8px" value="'+esc(o[1])+'"><input id="o2" style="margin-top:8px" value="'+esc(o[2])+'"><label>'+t('bg')+'</label><textarea id="bg" rows="3">'+esc(p.bg)+'</textarea></div><button class="btn" onclick="saveSetup()">'+t('start')+'</button><button class="btn alt" style="margin-top:10px" onclick="setLang()">'+t('lang')+'</button><button class="btn alt" style="margin-top:10px" onclick="fillDef()">↺ '+t('defb')+'</button>'}
+function fillDef(){S.p=Object.assign({},S.p||{},defP());view='setup';render()}
+function f(id,v,ty){return'<label>'+t(id)+'</label><input id="'+id+'" type="'+(ty||'text')+'" '+(ty==='number'?'inputmode="numeric" ':'')+'value="'+esc(v)+'">'}
+function g(id){return document.getElementById(id).value}
+function saveSetup(){var W=[],i=0;while(document.getElementById('wn'+i)){var n=g('wn'+i).trim();if(n)W.push({name:n,from:+g('wf'+i)||0,to:+g('wt'+i)||0});i++}
+ if(!g('gp').trim()||!W.length||!(+g('vot')>0)){alert(S.lang==='en'?'Fill GP name, voters, wards':'పేరు, ఓటర్లు, వార్డులు నింపండి');return}
+ S.p=Object.assign({},S.p||{},{gp:g('gp').trim(),po:g('po'),ps:g('ps'),mdl:g('mdl'),sdv:g('sdv'),dst:g('dst'),pinc:g('pinc'),pop:+g('pop')||0,vot:+g('vot'),mal:+g('mal')||0,fem:+g('fem')||0,thr:+g('thr')||0,pst:g('pst'),psa:g('psa'),pty:g('pty'),wards:W,wd:W.length,res:+g('res'),opp:[g('o0'),g('o1'),g('o2')],bg:g('bg')});delete S.p.edit;
+ S.hh.forEach(function(h){if(h.w>W.length)h.w=W.length});save();go('home')}
+function home(){var p=S.p,opps=p.opp.filter(function(x){return x.trim()}).length;
+ var pl=Math.round(p.vot*.8),need=opps<=1?Math.floor(pl/2)+1:Math.round(pl*.4);
+ var a=sumV('A'),pc=Math.min(100,Math.round(a/need*100)),dl='';
+ if(S.date){var d=Math.ceil((new Date(S.date)-new Date(new Date().toDateString()))/864e5);dl='<div class="big">'+(d>=0?d:0)+'</div><div class="mu">'+t('days')+'</div>'}
+ var h='<div class="top"><h1>'+esc(p.gp)+'</h1><button class="x" style="color:var(--ink)" onclick="setLang()">'+t('lang')+'</button></div>'+
+ '<div class="mu">📍 '+esc([p.po,p.mdl,p.dst,p.pinc].filter(Boolean).join(' · '))+'</div><div class="mu" style="margin-bottom:10px">'+RES[p.res][S.lang==='en'?1:0]+' · '+p.vot+' · '+p.wd+' '+t('ward')+'</div>'+
+ syncBadge()+'<div class="card"><label style="margin-top:0">'+t('pd')+'</label><input type="date" value="'+esc(S.date)+'" onchange="S.date=this.value;save();render()">'+dl+'</div>'+
+ '<div class="card"><div class="mu">'+t('tgt')+'</div><div class="big">'+need+'</div><div class="bar"><i style="width:'+pc+'%"></i></div>'+
+ '<div><span class="dot" style="background:var(--A)"></span>'+t('sure')+': <b>'+a+'</b></div>'+
+ '<div><span class="dot" style="background:var(--B)"></span>'+t('lean')+': <b>'+sumV('B')+'</b></div>'+
+ '<div><span class="dot" style="background:var(--C)"></span>'+t('und')+': <b>'+sumV('C')+'</b></div>'+
+ '<div><span class="dot" style="background:var(--D)"></span>'+t('opn')+': <b>'+sumV('D')+'</b></div><div class="mu" style="margin-top:6px">'+t('note1')+'</div></div>';
+ h+='<div class="card"><h2>'+t('wards')+'</h2>';
+ for(var w=1;w<=p.wd;w++){var ev=el(w);h+='<div class="row" style="min-height:44px;border-bottom:1px solid var(--ln)"><b style="flex:none;width:34px">'+w+'</b><span class="mu" style="flex:4">'+esc(wname(w))+' · '+ev+' ('+cov(w)+'%)</span><span style="color:var(--A);font-weight:800;text-align:right">A '+sumV('A',w)+'</span></div>'}
+ h+='</div><div class="card"><h2>'+t('tasks')+'</h2>'+TASKS.map(function(k,i){var on=S.chk[i];return'<label class="chk '+(on?'done':'')+'" style="margin:0"><input type="checkbox" '+(on?'checked':'')+' onchange="S.chk['+i+']=this.checked;save();render()"><span>'+k[S.lang==='en'?1:0]+'</span></label>'}).join('')+'</div>'+
+ detCard()+'<button class="btn alt" onclick="S.p.edit=1;go(\'setup\')">'+t('edit')+'</button>';
+ if(S.p.opp.some(function(x){return x.trim()}))h+='<div class="card" style="margin-top:12px"><div class="mu">'+t('opp')+'</div>'+S.p.opp.filter(function(x){return x.trim()}).map(function(x){return'<div>• '+esc(x)+'</div>'}).join('')+'</div>';
+ return h}
+
+function wardChips(sel,fn){var h='<div class="chips"><button class="chip '+(sel==0?'on':'')+'" onclick="'+fn+'(0)">'+t('all')+'</button>';
+ for(var w=1;w<=S.p.wd;w++)h+='<button class="chip '+(sel==w?'on':'')+'" onclick="'+fn+'('+w+')">'+w+'</button>';return h+'</div>'}
+function setW(w){wardF=w;render()}
+function wardSel(id){return'<select id="'+id+'">'+wopts()+'</select>'}
+function homes(){return'<h2>'+t('hh')+'</h2><div class="card"><label style="margin-top:0">'+t('headn')+'</label><input id="hn"><div class="row"><div><label>'+t('ward')+'</label>'+wardSel('hw')+'</div><div><label>'+t('nv')+'</label><input id="hv" type="number" inputmode="numeric" value="3"></div></div><label>'+t('ph')+'</label><input id="hp" type="tel" inputmode="tel"><label>'+t('sl')+'</label><input id="hs" inputmode="numeric"><label>'+t('note')+'</label><input id="hq"><button class="btn" style="margin-top:14px" onclick="addH()">＋ '+t('add')+'</button></div>'+bulkCard()+'<input placeholder="🔍 '+t('nm')+'" value="'+esc(S.q||'')+'" oninput="S.q=this.value;sr()">'+wardChips(wardF,'setW')+catChips()+'<div id="hl">'+hlist()+'</div>'}
+function catChips(){return'<div class="chips">'+['','A','B','C','D'].map(function(c){return'<button class="chip '+(CF===c?'on':'')+'" onclick="setCF(\''+c+'\')">'+(c||t('all'))+'</button>'}).join('')+'</div>'}
+function setCF(c){CF=c;render()}
+function sr(){document.getElementById('hl').innerHTML=hlist();tips()}
+function hlist(){var q=(S.q||'').toLowerCase(),L=S.hh.filter(function(x){return(!wardF||x.w==wardF)&&(!CF||x.c===CF)&&x.name.toLowerCase().indexOf(q)>-1}),h='<p class="mu">'+L.length+' / '+S.hh.length+'</p>';
+ if(!L.length)h+='<p class="mu">'+t('none')+'</p>';
+ L.slice().reverse().forEach(function(x){h+='<div class="card"><div class="top" style="margin:0"><div><b>'+esc(x.name)+'</b><div class="mu">'+t('ward')+' '+wl(x.w)+' · '+x.n+(x.sl?' · #'+esc(x.sl):'')+' · '+t('visit')+': '+x.v+(x.note?'<br>📝 '+esc(x.note):'')+'</div></div><div style="white-space:nowrap">'+ct(x)+'<button class="x" onclick="ed(\'hh\','+x.id+')">✏</button><button class="x" onclick="delH('+x.id+')">🗑</button></div></div><div class="cats">'+
+  ['A','B','C','D'].map(function(c){return'<button class="cat '+c+(x.c===c?' on':'')+'" onclick="setC('+x.id+',\''+c+'\')">'+c+'</button>'}).join('')+'</div><button class="btn alt sm" style="margin-top:10px;width:100%" onclick="visit('+x.id+')">＋ '+t('visit')+'</button></div>'});return h}
+function addH(){var n=g('hn').trim();if(!n)return;if(!inR(+g('hw'),g('hs'))&&!confirm(t('badsl')))return;S.hh.push({id:nid(),name:n,w:+g('hw'),n:+g('hv')||1,p:g('hp').trim(),note:g('hq').trim(),sl:g('hs').trim(),c:'C',v:0,voted:false});save();render()}
+function fh(id){return S.hh.filter(function(x){return x.id===id})[0]}
+function setC(id,c){fh(id).c=c;save();render()}
+function visit(id){fh(id).v++;S.log.push({id:id,t:Date.now()});if(S.log.length>3000)S.log.shift();save();render()}
+function delH(id){if(confirm(t('conf'))){S.hh=S.hh.filter(function(x){return x.id!==id});save();render()}}
+
+function pollv(){var sup=S.hh.filter(function(x){return x.c==='A'||x.c==='B'}),tot=sup.reduce(function(a,x){return a+x.n},0),dn=sup.filter(function(x){return x.voted}).reduce(function(a,x){return a+x.n},0),pc=tot?Math.round(dn/tot*100):0;
+ var h='<h2>'+t('poll')+'</h2>'+psCard()+'<div class="card"><div class="mu">'+t('prog')+'</div><div class="big">'+dn+' / '+tot+'</div><div class="bar"><i style="width:'+pc+'%"></i></div><b>'+pc+'%</b><div class="mu" style="margin-top:8px">'+t('hint9')+'<br>'+t('hint11')+'<br>'+t('hint12')+'</div></div>'+
+ '<div class="chips"><button class="chip '+(pollF==='todo'?'on':'')+'" onclick="pollF=\'todo\';render()">'+t('todo')+'</button><button class="chip '+(pollF==='done'?'on':'')+'" onclick="pollF=\'done\';render()">'+t('did')+'</button></div>'+wardChips(wardF,'setW');
+ var L=sup.filter(function(x){return (pollF==='done')===!!x.voted&&(!wardF||x.w==wardF)}).sort(function(a,b){return a.c<b.c?-1:1});
+ if(!L.length)h+='<p class="mu">'+t('none')+'</p>';
+ L.forEach(function(x){h+='<div class="card '+(x.voted?'done':'')+'"><div class="top" style="margin:0"><div><span class="dot" style="background:var(--'+x.c+')"></span><b>'+esc(x.name)+'</b><div class="mu">'+t('ward')+' '+wl(x.w)+' · '+x.n+'</div></div></div><button class="btn '+(x.voted?'alt':'')+'" style="margin-top:8px" onclick="tv('+x.id+')">'+(x.voted?'↩ '+t('todo'):'✔ '+t('voted'))+'</button></div>'});
+ return h}
+function tv(id){var x=fh(id);x.voted=!x.voted;save();render()}
+
+function moneyv(){var sp=S.exp.reduce(function(a,x){return a+x.a},0),pc=S.limit?Math.min(100,Math.round(sp/S.limit*100)):0;
+ var h='<h2>'+t('money')+'</h2><div class="card"><label style="margin-top:0">'+t('lim')+'</label><input type="number" inputmode="numeric" value="'+(S.limit||'')+'" onchange="S.limit=+this.value||0;save();render()">'+
+ '<div class="big" style="margin-top:12px">₹'+sp+'</div><div class="mu">'+t('spent')+(S.limit?' · '+t('left')+': ₹'+(S.limit-sp):'')+'</div><div class="bar"><i style="width:'+pc+'%;background:'+(pc>90?'var(--D)':'var(--A)')+'"></i></div>'+(pc>90?'<b style="color:var(--D)">'+t('warn')+'</b>':'')+'</div>'+
+ '<div class="card"><label style="margin-top:0">'+t('amt')+'</label><input id="ea" type="number" inputmode="numeric"><label>'+t('note')+'</label><input id="en"><button class="btn" style="margin-top:14px" onclick="addE()">＋ '+t('save')+'</button></div>';
+ if(!S.exp.length)h+='<p class="mu">'+t('none')+'</p>';
+ S.exp.slice().reverse().forEach(function(x){h+='<div class="card"><div class="top" style="margin:0"><div><b>₹'+x.a+'</b> '+esc(x.n)+'<div class="mu">'+x.d+'</div></div><button class="x" onclick="ed(\'exp\','+x.id+')">✏</button><button class="x" onclick="delE('+x.id+')">'+t('del')+'</button></div></div>'});
+ return h}
+function addE(){var a=+g('ea');if(!(a>0))return;S.exp.push({id:nid(),a:a,n:g('en'),d:new Date().toLocaleDateString('en-IN')});save();render()}
+function delE(id){if(confirm(t('conf'))){S.exp=S.exp.filter(function(x){return x.id!==id});save();render()}}
+
+function teamv(){var h='<h2>'+t('team')+'</h2><div class="card"><label style="margin-top:0">'+t('nm')+'</label><input id="tn"><label>'+t('ph')+'</label><input id="tp" type="tel" inputmode="tel"><div class="row"><div><label>'+t('ward')+'</label><select id="tw">'+wopts()+'</select></div><div><label>'+t('role')+'</label><input id="tr"></div></div><button class="btn" style="margin-top:14px" onclick="addT()">＋ '+t('save')+'</button></div>';
+ if(!S.team.length)h+='<p class="mu">'+t('none')+'</p>';
+ S.team.forEach(function(x){h+='<div class="card"><div class="top" style="margin:0"><div><b>'+esc(x.n)+'</b><div class="mu">'+t('ward')+' '+x.w+' · '+esc(x.r)+'</div>'+(x.p?'<a class="call" href="tel:'+esc(x.p)+'">📞 '+esc(x.p)+'</a>':'')+'</div><button class="x" onclick="ed(\'team\','+x.id+')">✏</button><button class="x" onclick="delT('+x.id+')">'+t('del')+'</button></div></div>'});
+ return h+syncCard()+safeCard()+'<button class="btn alt" style="margin-top:12px" onclick="if(confirm(t(\'conf\'))){try{localStorage.removeItem(K)}catch(e){}load();go(\'setup\')}">'+t('rst')+'</button>'}
+function addT(){var n=g('tn').trim();if(!n)return;S.team.push({id:nid(),n:n,p:g('tp').trim(),w:+g('tw'),r:g('tr')});save();render()}
+function delT(id){if(confirm(t('conf'))){S.team=S.team.filter(function(x){return x.id!==id});save();render()}}
+
+function render(){var a=document.getElementById('app'),nv=document.getElementById('nav');document.documentElement.lang=S.lang;
+ if(!S.p||view==='setup'){nv.style.display='none';a.innerHTML=setup();tips();hb();return}
+ nv.style.display='flex';
+ var V={home:home,hh:homes,poll:pollv,money:moneyv,rep:rep,more:more,guide:guide,team:teamv,des:desv,wa:wav},I={home:'🏠',hh:'👥',poll:'🗳',money:'₹',rep:'📊',more:'☰'},sub={guide:1,team:1,des:1,wa:1};
+ a.innerHTML=(sub[view]?'<button class="x" style="color:var(--ink);font-size:18px" onclick="go(\'more\')">← '+t('more')+'</button>':'')+V[view]();
+ nv.innerHTML=Object.keys(I).map(function(k){return'<button class="tab '+(k===view||(k==='more'&&sub[view])?'on':'')+'" onclick="go(\''+k+'\')"><b>'+I[k]+'</b>'+t(k)+'</button>'}).join('');
+ if(view==='des'||view==='wa')draw();tips();hb()}
+Object.assign(T,{guide:['గైడ్','Guide'],gc:['చెక్‌లిస్ట్','Checklist'],gd:['డిజైన్','Designs'],gp2:['ప్రింటింగ్','Printing'],sheet:['గూగుల్ షీట్','Google Sheet'],url:['షీట్ లింక్ (Script URL)','Sheet link (Script URL)'],conn:['కలపండి','Connect'],up:['పంపండి','Upload'],down:['తెచ్చుకోండి','Restore'],syn:['పంపుతున్నాం…','Sending…'],ok:['షీట్‌లో సేవ్ అయింది','Saved to sheet'],off:['ఇంటర్నెట్ లేదు, తర్వాత పంపుతాం','Offline, will retry'],conf2:['షీట్ డేటా ఫోన్ డేటాను మారుస్తుంది. సరేనా?','Sheet data will replace phone data. OK?'],cand:['సర్పంచ్ అభ్యర్థి','Sarpanch candidate'],vote:['మీ ఓటు నాకే వేయండి','Please vote for me'],cname:['అభ్యర్థి పేరు','Candidate name'],sym:['గుర్తు (ఎమోజి/పేరు)','Symbol (emoji/name)'],prm:['వాగ్దానం','Promise'],pr:['ప్రింట్ / PDF','Print / PDF'],wa:['వాట్సాప్‌లో పంపండి','Share on WhatsApp'],photo:['ఫోటో','Photo'],copies:['అవసరమైన కాపీలు (అంచనా)','Copies needed (estimate)'],rate:['ఒక్క కాపీ ధర ₹','Rate per copy ₹'],est:['మొత్తం అంచనా','Estimated total'],done:['పూర్తయింది','done']});
+var GC=[['నోటిఫికేషన్ ముందు','Before notice',[['రిజర్వేషన్, వార్డు నిర్ధారణ','Confirm reservation and ward'],['ఓటర్ల జాబితాలో మీ పేరు చూడండి','Check your name on voter list'],['ధృవపత్రాలు సిద్ధం చేయండి','Keep certificates ready'],['ప్రతి వార్డుకు ఒక కెప్టెన్','One captain per ward']]],
+['నామినేషన్','Nomination',[['ప్రతిపాదకుడు, బలపరిచేవారు ఓటర్లేనా చూడండి','Proposer and seconder must be voters'],['అఫిడవిట్, డిపాజిట్ సిద్ధం','Affidavit and deposit ready'],['చివరి రోజుకు ముందే దాఖలు చేయండి','File before the last day'],['ఖర్చుకు ప్రత్యేక రిజిస్టర్','Separate expense register']]],
+['ప్రచారం','Campaign',[['ప్రతి ఇంటికి 3 సార్లు','Every home 3 times'],['మహిళలు, సంఘాల సమావేశాలు','Women and SHG meetings'],['పెద్దలను కలవండి','Meet elders and leaders'],['ప్రతి వార్డుకు వాట్సాప్ గ్రూప్','WhatsApp group per ward'],['పుకార్లకు వెంటనే సమాధానం','Answer rumours fast']]],
+['చివరి 3 రోజులు','Last 3 days',[['A, B ఇళ్లకు ఓటర్ స్లిప్పులు','Voter slips to A, B homes'],['వృద్ధులు, వలస వారికి రవాణా','Transport for elderly and migrants'],['బూత్ ఏజెంట్లకు శిక్షణ','Train booth agents'],['ప్రచార గడువు తర్వాత నిశ్శబ్దం','Silence after campaign ends']]],
+['పోలింగ్ రోజు','Poll day',[['ఉదయం 9 కల్లా 30% ఓటింగ్','30% voted by 9 am'],['A ఇళ్లు ఒక్కొక్కటి టిక్ చేయండి','Tick every A home'],['ఫిర్యాదు రాతపూర్వకంగా ఇవ్వండి','Complain in writing']]],
+['లెక్కింపు','Counting',[['ప్రతి టేబుల్‌కు కౌంటింగ్ ఏజెంట్','Agent at every table'],['తేడా తక్కువైతే రీకౌంట్ కోరండి','Ask recount if margin is thin'],['ఉప సర్పంచ్ కోసం వార్డు సభ్యులతో మాట్లాడండి','Talk to ward members for Upa-sarpanch']]]];
+var GT=[[['ఫోటో స్పష్టంగా, నవ్వుతూ, పెద్దదిగా','Clear, smiling, large photo'],['గుర్తు పెద్దగా చూపండి','Show the symbol big'],['3 వాగ్దానాలే, చిన్న వాక్యాలు','Only 3 promises, short lines'],['2 రంగులు చాలు','Two colours are enough'],['ఫోన్ నంబర్ పెద్దగా','Phone number large']],
+[['A5, 130 gsm కాగితం సరిపోతుంది','A5 on 130 gsm paper is enough'],['ప్రింటర్ పేరు వేయాలా? SEC నియమాలు చూడండి','Check SEC rules on printer name'],['2-3 ప్రింటర్ల కోట్ తీసుకోండి','Get 2-3 printer quotes'],['పూర్తి ముద్రణకు ముందు 1 ప్రూఫ్ చూడండి','Check one proof first'],['బిల్లు తీసుకుని ఖర్చులో రాయండి','Keep the bill, log it in Money'],['గుర్తు ఖరారయ్యాకే ముద్రించండి','Print after symbol is allotted']]];
+var GF='chk',PH='',SY='',tm;
+function L2(){return S.lang==='en'?1:0}
+function guide(){var l=L2(),n=Object.keys(S.g).filter(function(k){return S.g[k]}).length,tot=23,
+ h='<h2>📘 '+t('guide')+'</h2><div class="chips">'+[['chk','gc'],['prt','gp2']].map(function(x){return'<button class="chip '+(GF===x[0]?'on':'')+'" onclick="GF=\''+x[0]+'\';render()">'+t(x[1])+'</button>'}).join('')+'</div>';
+ if(GF==='chk'){h+='<div class="card"><b>'+n+' / '+tot+' '+t('done')+'</b><div class="bar"><i style="width:'+Math.round(n/tot*100)+'%"></i></div></div>';
+  GC.forEach(function(ph,pi){h+='<div class="card"><b>'+ph[l]+'</b>';ph[2].forEach(function(it,i){var k=pi+'_'+i,on=S.g[k];h+='<label class="chk '+(on?'done':'')+'" style="margin:0"><input type="checkbox" '+(on?'checked':'')+' onchange="S.g[\''+k+'\']=this.checked;save();render()"><span>'+it[l]+'</span></label>'});h+='</div>'})}
+ if(GF==='des'){var d=S.d;h+='<div class="card"><label style="margin-top:0">'+t('cname')+'</label><input id="dn" value="'+esc(d.n)+'" oninput="updP()"><label>'+t('sym')+'</label><input id="ds" value="'+esc(d.s)+'" oninput="updP()">'+
+  [0,1,2].map(function(i){return'<label>'+t('prm')+' '+(i+1)+'</label><input id="d'+i+'" value="'+esc((d.a||[])[i])+'" oninput="updP()">'}).join('')+'<label>'+t('ph')+'</label><input id="dp" type="tel" inputmode="tel" value="'+esc(d.p)+'" oninput="updP()"><label>'+t('photo')+'</label><input type="file" accept="image/*" onchange="photo(this)">'+
+  '<div class="chips" style="margin-top:12px">'+['🟣','🟢','🟠'].map(function(c,i){return'<button class="chip '+((d.th||0)==i?'on':'')+'" onclick="S.d.th='+i+';save();render()">'+c+'</button>'}).join('')+'</div></div>'+pamHTML()+
+  '<button class="btn" style="margin-top:12px" onclick="window.print()">🖨 '+t('pr')+'</button><a class="btn alt" style="margin-top:10px;text-align:center;text-decoration:none;line-height:32px" target="_blank" href="https://wa.me/?text='+encodeURIComponent((d.n||'')+' - '+t('cand')+'\n'+(d.a||[]).filter(Boolean).join('\n')+'\n'+t('vote')+' '+(d.p||''))+'">💬 '+t('wa')+'</a><div class="card" style="margin-top:12px">'+GT[0].map(function(x){return'<div class="chk">✔ '+x[l]+'</div>'}).join('')+'</div>'}
+ if(GF==='prt'){var c=Math.ceil(S.p.vot/3*1.3/100)*100;h+='<div class="card"><div class="mu">'+t('copies')+'</div><div class="big">'+c+'</div><label>'+t('rate')+'</label><input type="number" inputmode="decimal" value="'+(S.rate||'')+'" onchange="S.rate=+this.value;save();render()"><div class="mu" style="margin-top:8px">'+t('est')+'</div><div class="big">₹'+Math.round(c*(S.rate||0))+'</div></div><div class="card">'+GT[1].map(function(x){return'<div class="chk">✔ '+x[l]+'</div>'}).join('')+'</div>'}
+ return h}
+Object.assign(T,{more:['మరిన్ని','More'],rep:['నివేదికలు','Reports'],des:['డిజైన్','Design'],wa:['వాట్సాప్','WhatsApp'],fu:['కలవాల్సినవి','Follow-up'],needv:['ఇళ్లు ఇంకా కలవాలి (3 సార్లు)','homes need visits (3 times)'],edit2:['మార్చండి','Edit'],sendrep:['నివేదికను వాట్సాప్‌లో పంపండి','Send report on WhatsApp'],gap:['ఓట్ల తేడా','Vote gap'],symu:['ఎన్నికల గుర్తు ఫోటో','Election symbol image'],slog:['నినాదం','Slogan'],dpng:['డిజైన్ డౌన్‌లోడ్ (ఫోటో)','Download design (image)'],msg:['సందేశం (రాయండి లేదా మాట్లాడండి)','Message (type or speak)'],att:['డిజైన్ ఫోటో జతచేయండి','Attach design image'],send:['వాట్సాప్‌కు పంపండి','Send to WhatsApp'],sto:['ఎవరికి పంపాలి (ఫోన్ ఉన్నవారు)','Send to (homes with phone)'],nomic:['ఈ ఫోన్‌లో మైక్ పనిచేయదు. కీబోర్డ్ మైక్ వాడండి','Mic not supported. Use keyboard mic'],attn:['డిజైన్ ఫోన్‌లో సేవ్ అయింది. వాట్సాప్‌లో 📎 నొక్కి జతచేయండి','Design saved. In WhatsApp tap 📎 to attach'],helpon:['సహాయం ఆన్: ఏ బటన్ నొక్కినా వివరణ వస్తుంది','Help ON: tap any button to see what it does'],menu1:['గైడ్ / చెక్‌లిస్ట్','Guide / Checklist'],menu2:['డిజైన్ / పాంప్లెట్','Design / Pamphlet'],menu3:['వాట్సాప్ సందేశాలు','WhatsApp messages'],menu4:['టీమ్ / షీట్','Team / Sheet']});
+var TP=[['నమస్కారం','Greeting','నమస్కారం! నేను {n}, సర్పంచ్ అభ్యర్థిని. మీ ఆశీస్సులు కావాలి 🙏','Namaskaram! I am {n}, sarpanch candidate. I seek your blessings 🙏'],['ఓటు గుర్తు చేయండి','Poll reminder','ఈ రోజు తప్పకుండా ఓటు వేయండి. {n} గుర్తు: {s} 🗳','Please vote today. {n}, symbol: {s} 🗳'],['ధన్యవాదాలు','Thanks','మీ మద్దతుకు ధన్యవాదాలు! 🙏 - {n}','Thank you for your support! 🙏 - {n}']];
+var TIPS={"go('home')":'ఇక్కడ మొత్తం స్థితి కనిపిస్తుంది|See overall status here',"go('hh')":'ఇళ్లు చేర్చండి, A/B/C/D వేయండి|Add homes, mark A/B/C/D',"go('poll')":'పోలింగ్ రోజు ఓటు వేసినవారిని టిక్ చేయండి|Tick who voted on poll day',"go('money')":'ఖర్చు రాయండి, పరిమితి చూడండి|Log spending, watch limit',"go('rep')":'ఎవరిని కలవాలో నివేదికలు చూపుతాయి|Reports show who to follow up',"go('more')":'గైడ్, డిజైన్, వాట్సాప్, టీమ్|Guide, design, WhatsApp, team',"go('guide')":'ప్రతి దశకు చెక్‌లిస్ట్|Checklist for every phase',"go('des')":'పాంప్లెట్ డిజైన్ చేయండి|Design your pamphlet',"go('wa')":'సందేశాలు, డిజైన్ పంపండి|Send messages and design',"go('team')":'టీమ్, గూగుల్ షీట్|Team and Google Sheet',addH:'ఈ ఇంటిని జాబితాలో చేర్చుతుంది|Adds this home',setC:'A=ఖచ్చితం B=అవకాశం C=తేలలేదు D=వ్యతిరేకం|A=sure B=likely C=undecided D=against',setCF:'ఈ రకం ఇళ్లు మాత్రమే చూపు|Show only this type',setW:'ఈ వార్డు మాత్రమే చూపు|Show only this ward','visit(':'ఒక సందర్శన లెక్క వేస్తుంది|Counts one visit',"ed('":'వివరాలు మార్చండి|Edit details',delH:'తొలగిస్తుంది (అడుగుతుంది)|Deletes (asks first)',delE:'తొలగిస్తుంది (అడుగుతుంది)|Deletes (asks first)',delT:'తొలగిస్తుంది (అడుగుతుంది)|Deletes (asks first)','tv(':'ఓటు వేసినట్లు గుర్తు|Mark as voted',addE:'ఖర్చు సేవ్ చేస్తుంది|Saves this expense',addT:'సభ్యుడిని చేర్చుతుంది|Adds team member','RF=':'ఈ నివేదిక చూడండి|Open this report',shareRep:'నివేదికను వాట్సాప్‌లో పంపుతుంది|Sends report via WhatsApp',setLang:'భాష మార్చండి|Switch language','push(':'డేటాను గూగుల్ షీట్‌కు పంపుతుంది|Sends data to Google Sheet','pull(':'షీట్ నుంచి డేటా తెస్తుంది|Restores from sheet','window.print':'పాంప్లెట్ ప్రింట్ / PDF|Print or save as PDF',dpng:'డిజైన్‌ను ఫోటోగా సేవ్ చేస్తుంది|Saves design as image',sendWA:'వాట్సాప్ తెరుస్తుంది|Opens WhatsApp','mic(':'మాట్లాడండి, అక్షరాలుగా మారుతుంది|Speak, it becomes text','tpl(':'రెడీ సందేశం నింపుతుంది|Fills a ready message','GF=':'ఈ విభాగం చూడండి|Open this section','th=':'డిజైన్ రంగు మార్చండి|Change design colour'};
+var tt;
+function tips(){var a=document.getElementById('app');if(a&&!document.getElementById('ver'))a.insertAdjacentHTML('beforeend','<p id="ver" class="mu" style="text-align:center;margin-top:16px">My Election Assistant · Demo</p>');document.querySelectorAll('button,a.btn,.chip').forEach(function(el){var o=el.getAttribute('onclick')||'',k=Object.keys(TIPS).filter(function(k){return o.indexOf(k)>-1})[0];if(k)el.dataset.tip=TIPS[k]})}
+function showTip(el){var m=document.getElementById('tip'),r=el.getBoundingClientRect();m.textContent=el.dataset.tip.split('|')[L2()];m.style.display='block';var w=m.offsetWidth,x=Math.max(8,Math.min(innerWidth-w-8,r.left+r.width/2-w/2)),up=r.top>110;m.style.left=x+'px';m.style.top=(up?r.top-m.offsetHeight-14:r.bottom+14)+'px';m.className=up?'up':'dn';m.style.setProperty('--ax',(r.left+r.width/2-x)+'px');clearTimeout(tt);tt=setTimeout(function(){m.style.display='none'},3800)}
+function hb(){var b=document.getElementById('hb');b.className=S.help?'on':'';b.style.display=(!S.p||view==='setup')?'none':'block'}
+document.addEventListener('click',function(e){var el=e.target.closest('[data-tip]');if(S.help&&el&&el.id!=='hb'){e.preventDefault();e.stopPropagation();showTip(el)}},true);
+document.addEventListener('mouseover',function(e){var el=e.target.closest('[data-tip]');if(el)showTip(el)});
+var lp;document.addEventListener('touchstart',function(e){var el=e.target.closest('[data-tip]');if(el)lp=setTimeout(function(){showTip(el)},600)},{passive:true});document.addEventListener('touchend',function(){clearTimeout(lp)});
+function helpT(){S.help=!S.help;save();hb();if(S.help){var m=document.getElementById('tip');m.textContent=t('helpon');m.style.display='block';m.className='';m.style.left='8px';m.style.top='70px';m.style.setProperty('--ax','-99px');clearTimeout(tt);tt=setTimeout(function(){m.style.display='none'},3500)}}
+var EF={hh:[['name','headn'],['w','ward','number'],['n','nv','number'],['p','ph','tel'],['note','note'],['sl','sl']],exp:[['a','amt','number'],['n','note']],team:[['n','nm'],['p','ph','tel'],['w','ward','number'],['r','role']]},EDK,CF='',RF='fu',RT=[],CVI={};
+function ed(k,id){var o=S[k].filter(function(x){return x.id===id})[0];EDK=[k,id];var m=document.getElementById('md');m.innerHTML='<div class="sheet"><h2>✏ '+t('edit2')+'</h2>'+EF[k].map(function(f,i){return'<label>'+t(f[1])+'</label><input id="e'+i+'" type="'+(f[2]||'text')+'" value="'+esc(o[f[0]])+'">'}).join('')+'<div class="row" style="margin-top:14px"><button class="btn alt" onclick="closeEd()">✖</button><button class="btn" onclick="saveEd()">✔ '+t('save')+'</button></div></div>';m.className='on'}
+function saveEd(){var k=EDK[0],o=S[k].filter(function(x){return x.id===EDK[1]})[0];EF[k].forEach(function(f,i){var v=g('e'+i);o[f[0]]=f[2]==='number'?(+v||0):v});save();closeEd();render()}
+function closeEd(){document.getElementById('md').className=''}
+function wn(p){var d=String(p).replace(/\D/g,'');return d.length===10?'91'+d:d}
+function ct(x){return x.p?'<a class="call" style="font-size:26px;padding:0 6px" href="tel:'+esc(x.p)+'">📞</a><a class="call" style="font-size:26px;padding:0 6px" target="_blank" href="https://wa.me/'+wn(x.p)+'">💬</a>':''}
+function need(){var p=S.p,o=p.opp.filter(function(x){return x.trim()}).length,pl=Math.round(p.vot*.8);return o<=1?Math.floor(pl/2)+1:Math.round(pl*.4)}
+function more(){return'<h2>☰ '+t('more')+'</h2><div class="mg">'+[['guide','📘','menu1'],['des','🎨','menu2'],['wa','💬','menu3'],['team','📞','menu4']].map(function(x){return'<button class="btn alt" onclick="go(\''+x[0]+'\')">'+x[1]+'<br>'+t(x[2])+'</button>'}).join('')+'</div>'}
+function row(x,s){return'<div class="card"><div class="top" style="margin:0"><div><span class="dot" style="background:var(--'+x.c+')"></span><b>'+esc(x.name)+'</b><div class="mu">'+t('ward')+' '+wl(x.w)+' · '+s+'</div></div><div style="white-space:nowrap">'+ct(x)+'</div></div></div>'}
+function rep(){RT=[S.p.gp+' – '+t('rep')];var h='<h2>📊 '+t('rep')+'</h2><div class="chips">'+[['fu','fu'],['wd','wards'],['pl','poll'],['mn','money'],['is','iss']].map(function(x){return'<button class="chip '+(RF===x[0]?'on':'')+'" onclick="RF=\''+x[0]+'\';render()">'+t(x[1])+'</button>'}).join('')+'</div>',L;
+ if(RF==='fu'||RF==='pl'){L=RF==='fu'?S.hh.filter(function(x){return x.c!=='D'&&x.v<3}).sort(function(a,b){return a.v-b.v||(a.c<b.c?-1:1)}):S.hh.filter(function(x){return(x.c==='A'||x.c==='B')&&!x.voted});
+  h+='<div class="card"><b style="font-size:28px">'+L.length+'</b> '+(RF==='fu'?t('needv'):t('todo'))+'</div>';L.forEach(function(x){RT.push(x.name+' · W'+x.w+' · '+x.c+(x.p?' · '+x.p:''));h+=row(x,RF==='fu'?x.v+'/3 '+t('visit'):x.n)})}
+ if(RF==='wd'){for(var w=1;w<=S.p.wd;w++){var tg=Math.ceil(need()*el(w)/S.p.vot),hs=S.hh.filter(function(x){return x.w===w}),A=sumV('A',w),gp=A-tg,vs=hs.reduce(function(a,x){return a+x.v},0);RT.push('W'+w+': A '+A+' B '+sumV('B',w)+' C '+sumV('C',w)+' D '+sumV('D',w)+' / '+tg);
+  h+='<div class="card"><div class="top" style="margin:0"><b>'+esc(wl(w))+'</b><b style="color:var(--'+(gp>=0?'A':'D')+')">'+t('gap')+' '+(gp>0?'+':'')+gp+'</b></div><div class="mu">'+hs.length+' '+t('hh')+' · '+t('visit')+' '+vs+' · '+t('cov')+' '+cov(w)+'%</div><div class="row" style="margin-top:6px;text-align:center"><b style="color:var(--A)">A '+A+'</b><b style="color:var(--B)">B '+sumV('B',w)+'</b><b style="color:var(--C)">C '+sumV('C',w)+'</b><b style="color:var(--D)">D '+sumV('D',w)+'</b></div></div>'}}
+ if(RF==='mn'){var sp=S.exp.reduce(function(a,x){return a+x.a},0),by={};S.exp.forEach(function(x){by[x.d]=(by[x.d]||0)+x.a});RT.push(t('spent')+' ₹'+sp+(S.limit?' / ₹'+S.limit:''));
+  h+='<div class="card"><div class="big">₹'+sp+'</div><div class="mu">'+(S.limit?t('left')+' ₹'+(S.limit-sp):'')+'</div></div>';Object.keys(by).forEach(function(d){RT.push(d+': ₹'+by[d]);h+='<div class="card top"><span>'+d+'</span><b>₹'+by[d]+'</b></div>'})}
+if(RF==='is'){L=S.hh.filter(function(x){return x.note});h+='<div class="card"><b style="font-size:28px">'+L.length+'</b> '+t('iss')+'</div>';L.forEach(function(x){RT.push(x.name+' · W'+x.w+': '+x.note);h+=row(x,'📝 '+esc(x.note))})}
+  return h+'<button class="btn" style="margin-top:12px" onclick="shareRep()">💬 '+t('sendrep')+'</button>'}
+function shareRep(){window.open('https://wa.me/?text='+encodeURIComponent(RT.join('\n')))}
+var TH=[['#2b2f7e','#6a3fd1','#ffcf33'],['#14703c','#2fb36b','#ffe66d'],['#b3320f','#f08a1c','#fff3c4'],['#0b5c6b','#16a0a8','#ffd1e8']];
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function wrap(c,tx,x,y,w,lh){var ws=String(tx).split(' '),ln='';ws.forEach(function(wd){var tt=ln?ln+' '+wd:wd;if(c.measureText(tt).width>w&&ln){c.fillText(ln,x,y);ln=wd;y+=lh}else ln=tt});c.fillText(ln,x,y)}
+function im(k){var s=S.d[k];if(!s)return null;if(!CVI[k]){var i=new Image();i.onload=draw;i.src=s;CVI[k]=i}return CVI[k].complete&&CVI[k].naturalWidth?CVI[k]:null}
+function draw(){var cv=document.getElementById('cv');if(!cv)return;var d=S.d,p=S.p,th=TH[d.th||0],W=1080,H=1532,c=cv.getContext('2d'),F='"Noto Sans Telugu",system-ui,sans-serif',l=L2();cv.width=W;cv.height=H;
+ var gr=c.createLinearGradient(0,0,W,H);gr.addColorStop(0,th[0]);gr.addColorStop(1,th[1]);c.fillStyle=gr;c.fillRect(0,0,W,H);
+ c.fillStyle='rgba(255,255,255,.08)';for(var i=0;i<50;i++){c.beginPath();c.arc((i*173)%W,(i*311)%H,16+(i%5)*12,0,7);c.fill()}
+ c.textAlign='center';c.fillStyle='#fff';c.font='700 44px '+F;c.fillText(p.gp+' · '+RES[p.res][l],W/2,90);
+ rr(c,W/2-230,115,460,72,36);c.fillStyle=th[2];c.fill();c.fillStyle='#222';c.font='800 40px '+F;c.fillText(t('cand'),W/2,168);
+ c.beginPath();c.arc(W/2,425,208,0,7);c.fillStyle='#fff';c.fill();c.beginPath();c.arc(W/2,425,196,0,7);c.fillStyle=th[2];c.fill();
+ c.save();c.beginPath();c.arc(W/2,425,184,0,7);c.clip();var ph=im('photo');if(ph){var s=Math.max(368/ph.width,368/ph.height);c.drawImage(ph,W/2-ph.width*s/2,425-ph.height*s/2,ph.width*s,ph.height*s)}else{c.fillStyle='#e8e8f4';c.fillRect(0,0,W,H);c.font='190px '+F;c.fillStyle='#999';c.fillText('🙂',W/2,490)}c.restore();
+ c.fillStyle='#fff';c.font='800 84px '+F;c.fillText(d.n||t('cname'),W/2,705);
+ if(d.sl){c.fillStyle=th[2];c.font='700 40px '+F;c.fillText(d.sl,W/2,765)}
+ rr(c,50,800,W-100,540,40);c.fillStyle='#fff';c.fill();
+ c.fillStyle=th[0];c.font='800 38px '+F;c.fillText(t('sym'),250,860);
+ rr(c,100,885,300,300,30);c.lineWidth=8;c.strokeStyle=th[0];c.stroke();var sg=im('symg');
+ if(sg){var q=Math.min(250/sg.width,250/sg.height);c.drawImage(sg,250-sg.width*q/2,1035-sg.height*q/2,sg.width*q,sg.height*q)}else{c.font='150px '+F;c.fillStyle=th[0];c.fillText(d.s||'🗳',250,1090)}
+ c.textAlign='left';(d.a||[]).forEach(function(x,i){if(!x)return;var y=890+i*150;c.beginPath();c.arc(470,y,30,0,7);c.fillStyle=th[0];c.fill();c.fillStyle='#fff';c.font='800 34px '+F;c.textAlign='center';c.fillText(i+1,470,y+12);c.textAlign='left';c.fillStyle='#222';c.font='700 40px '+F;wrap(c,x,520,y+10,470,50)});
+ c.fillStyle=th[2];c.fillRect(0,1385,W,147);c.textAlign='center';c.fillStyle='#222';c.font='800 52px '+F;c.fillText(t('vote'),W/2,1455);c.font='700 40px '+F;c.fillText('📞 '+(d.p||''),W/2,1507)}
+function updD(){var d=S.d;d.n=g('dn');d.s=g('ds');d.sl=g('dl');d.a=[g('d0'),g('d1'),g('d2')];d.p=g('dp');save();draw()}
+function pick(el,k){var f=el.files[0];if(!f)return;var r=new FileReader();r.onload=function(){var i=new Image();i.onload=function(){var sc=Math.min(1,500/Math.max(i.width,i.height)),z=document.createElement('canvas');z.width=i.width*sc;z.height=i.height*sc;z.getContext('2d').drawImage(i,0,0,z.width,z.height);S.d[k]=z.toDataURL(k==='symg'?'image/png':'image/jpeg',.85);CVI[k]=null;save();draw()};i.src=r.result};r.readAsDataURL(f)}
+function dpng(){var a=document.createElement('a');a.href=document.getElementById('cv').toDataURL('image/png');a.download='design.png';a.click()}
+function desv(){var d=S.d;return'<h2>🎨 '+t('des')+'</h2><canvas id="cv"></canvas><div class="chips" style="margin-top:12px">'+['🟣','🟢','🟠','🔵'].map(function(c,i){return'<button class="chip '+((d.th||0)==i?'on':'')+'" onclick="S.d.th='+i+';save();draw();render()">'+c+'</button>'}).join('')+'</div><div class="row"><button class="btn" onclick="window.print()">🖨 '+t('pr')+'</button><button class="btn alt" onclick="dpng()">⬇ '+t('dpng')+'</button></div><button class="btn" style="margin-top:10px" onclick="go(\'wa\')">💬 '+t('wa')+'</button>'+
+ '<div class="card" style="margin-top:12px"><label style="margin-top:0">'+t('cname')+'</label><input id="dn" value="'+esc(d.n)+'" oninput="updD()"><label>'+t('slog')+'</label><input id="dl" value="'+esc(d.sl)+'" oninput="updD()">'+[0,1,2].map(function(i){return'<label>'+t('prm')+' '+(i+1)+'</label><input id="d'+i+'" value="'+esc((d.a||[])[i])+'" oninput="updD()">'}).join('')+'<label>'+t('ph')+'</label><input id="dp" type="tel" inputmode="tel" value="'+esc(d.p)+'" oninput="updD()"><label>'+t('photo')+'</label><input type="file" accept="image/*" onchange="pick(this,\'photo\')"><label>'+t('symu')+'</label><input type="file" accept="image/*" onchange="pick(this,\'symg\')"><label>'+t('sym')+'</label><input id="ds" value="'+esc(d.s)+'" oninput="updD()"></div>'}
+function wav(){var l=L2(),h='<h2>💬 '+t('wa')+'</h2><div class="card"><div class="chips">'+TP.map(function(x,i){return'<button class="chip" onclick="tpl('+i+')">'+x[l]+'</button>'}).join('')+'</div><label style="margin-top:0">'+t('msg')+'</label><textarea id="wm" rows="4"></textarea><button class="btn alt" style="margin-top:8px" onclick="mic()">🎤</button><label class="chk" style="margin:6px 0 0"><input type="checkbox" id="at" checked><span>'+t('att')+'</span></label><canvas id="cv" style="max-width:55%"></canvas><button class="btn" style="margin-top:12px" onclick="sendWA(\'\')">💬 '+t('send')+'</button></div><div class="mu">'+t('sto')+'</div>'+wardChips(wardF,'setW')+catChips();
+ S.hh.filter(function(x){return x.p&&(!wardF||x.w==wardF)&&(!CF||x.c===CF)}).forEach(function(x){h+='<button class="btn alt" style="margin-top:8px;text-align:left" onclick="sendWA('+x.id+')"><span class="dot" style="background:var(--'+x.c+')"></span>💬 '+esc(x.name)+' · '+t('ward')+' '+x.w+'</button>'});return h}
+function tpl(i){document.getElementById('wm').value=TP[i][2+L2()].replace('{n}',S.d.n||'').replace('{s}',S.d.s||'')}
+function mic(){var R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){alert(t('nomic'));return}var r=new R();r.lang=S.lang==='en'?'en-IN':'te-IN';r.onresult=function(e){var m=document.getElementById('wm');m.value+=(m.value?' ':'')+e.results[0][0].transcript};r.start()}
+function sendWA(id){var h=id?fh(id):null,m=g('wm'),u='https://wa.me/'+(h?wn(h.p):'')+'?text='+encodeURIComponent(m),cv=document.getElementById('cv');
+ if(!document.getElementById('at').checked){window.open(u);return}
+ if(navigator.canShare&&navigator.share){cv.toBlob(function(b){var f=new File([b],'design.png',{type:'image/png'});if(navigator.canShare({files:[f]}))navigator.share({files:[f],text:m}).catch(function(){});else{window.open(u)}})}
+ else{dpng();alert(t('attn'));window.open(u)}}
+Object.assign(T,{plan:['ఈ రోజు లక్ష్యం','Target today'],plan2:['ఇళ్లు సందర్శించాలి','homes to visit'],plan3:['ఈ రోజు పూర్తి','done today'],note:['సమస్య / గమనిక','Issue / note'],iss:['సమస్యలు','Issues'],key:['షీట్ రహస్య కోడ్','Sheet secret code'],pin:['యాప్ పిన్ (4 అంకెలు)','App PIN (4 digits)'],pins:['పిన్ సేవ్','Save PIN'],unl:['తెరవండి','Unlock'],wpin:['తప్పు పిన్','Wrong PIN'],bulk:['జాబితా అతికించండి (పేరు, వార్డు, ఓటర్లు, ఫోన్)','Paste list (name, ward, voters, phone)'],imp:['చేర్చండి','Import'],bk:['బ్యాకప్ ఫైల్','Backup file'],rs:['ఫైల్ నుంచి తెచ్చుకోండి','Restore from file'],csv:['ఎక్సెల్ (CSV)','Excel (CSV)'],newer:['షీట్‌లో కొత్త డేటా ఉంది. తెచ్చుకోవాలా?','Sheet has newer data. Restore it?'],badkey:['⚠ కోడ్ తప్పు','⚠ Wrong code'],imped:['ఇళ్లు చేర్చబడ్డాయి','homes added'],pend:['పంపాల్సిన మార్పులు ఉన్నాయి','Changes waiting to upload'],safe:['భద్రత, బ్యాకప్','Safety and backup']});
+Object.assign(TIPS,{impH:'అతికించిన జాబితాను ఇళ్లుగా చేర్చుతుంది|Adds the pasted list as homes',bk:'అన్ని డేటా ఫైల్‌గా సేవ్ అవుతుంది|Saves all data as a file','rs(':'ఫైల్ నుంచి డేటా తెస్తుంది|Restores data from a file',csvH:'ఇళ్ల జాబితా ఎక్సెల్ ఫైల్|Homes list as Excel file',unl:'పిన్ సరైనదైతే తెరుస్తుంది|Opens if PIN is right',setPin:'యాప్ పిన్ సేవ్ చేస్తుంది|Saves the app PIN'});
+function defP(){return{gp:DEF.gp,po:DEF.po,ps:DEF.ps,mdl:DEF.mdl,sdv:DEF.sdv,dst:DEF.dst,pinc:DEF.pinc,pst:DEF.pst,psa:DEF.psa,pty:DEF.pty,mal:DEF.mal,fem:DEF.fem,thr:DEF.thr,vot:DEF.vot,wards:wardsOf.call(null,0,DEF),wd:DEF.wards.length}}
+function norm(){if(S.p&&!S.p.wards){S.p=Object.assign({},S.p,defP());S.hh.forEach(function(h){if(h.w>S.p.wd)h.w=S.p.wd})}['hh','team','exp','log'].forEach(function(k){if(!Array.isArray(S[k]))S[k]=[]});if(typeof S.chk!=='object'||!S.chk)S.chk={};if(S.p){if(!Array.isArray(S.p.opp))S.p.opp=['','',''];S.p.wd=+S.p.wd||(S.p.wards||[]).length||1;S.p.vot=+S.p.vot||1;S.p.res=+S.p.res||0}S.g=S.g||{};S.d=S.d||{};S.log=S.log||[];S.key=S.key||'';S.pin=S.pin||'';S.url=S.url||''}
+function persist(){try{ss(JSON.stringify(S))}catch(e){}}
+function dl(n,x,m){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([x],{type:m}));a.download=n;a.click()}
+function syncBadge(){var tod=new Date().toDateString(),dn=S.log.filter(function(x){return new Date(x.t).toDateString()===tod}).length,left=S.hh.filter(function(x){return x.c!=='D'}).reduce(function(a,x){return a+Math.max(0,3-x.v)},0),days=S.date?Math.max(1,Math.ceil((new Date(S.date)-new Date(new Date().toDateString()))/864e5)):1;
+ return(S.url&&(SY||S.dirty)?'<div class="mu" style="margin-bottom:8px">'+SY+(S.dirty?' · '+t('pend'):'')+'</div>':'')+'<div class="card"><div class="mu">'+t('plan')+'</div><div class="big">'+Math.ceil(left/days)+'</div><div class="mu">'+t('plan2')+' · '+dn+' '+t('plan3')+'</div></div>'}
+function syncCard(){return'<div class="card"><h2>📊 '+t('sheet')+'</h2><label style="margin-top:0">'+t('url')+'</label><input id="su" value="'+esc(S.url)+'" placeholder="https://script.google.com/..."><label>'+t('key')+'</label><input id="sk" value="'+esc(S.key)+'"><button class="btn" style="margin-top:10px" onclick="S.url=g(\'su\').trim();S.key=g(\'sk\').trim();save();push()">'+t('conn')+'</button><div class="row" style="margin-top:10px"><button class="btn alt sm" onclick="push()">⬆ '+t('up')+'</button><button class="btn alt sm" onclick="pull()">⬇ '+t('down')+'</button></div><p class="mu" style="margin-top:8px">'+SY+(S.dirty?' · '+t('pend'):'')+'</p></div>'}
+function safeCard(){return'<div class="card"><h2>🔒 '+t('safe')+'</h2><label style="margin-top:0">'+t('pin')+'</label><input id="pn" type="password" inputmode="numeric" maxlength="4" value="'+esc(S.pin)+'"><button class="btn alt" style="margin-top:8px" onclick="setPin()">'+t('pins')+'</button><div class="row" style="margin-top:12px"><button class="btn alt sm" onclick="bk()">⬇ '+t('bk')+'</button><button class="btn alt sm" onclick="csvH()">⬇ '+t('csv')+'</button></div><label>'+t('rs')+'</label><input type="file" accept=".json" onchange="rs(this)"></div>'}
+function setPin(){S.pin=g('pn').replace(/\D/g,'').slice(0,4);save()}
+function lock(){if(!S.pin)return;var m=document.getElementById('md');m.innerHTML='<div class="sheet"><h2>🔒</h2><input id="lp" type="password" inputmode="numeric" maxlength="4"><button class="btn" style="margin-top:12px" onclick="unl()">'+t('unl')+'</button></div>';m.className='on'}
+function unl(){if(g('lp')===S.pin)closeEd();else alert(t('wpin'))}
+function bk(){dl('campaign-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(S),'application/json')}
+function rs(el){var f=el.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var d=JSON.parse(r.result);if(d&&d.p&&confirm(t('conf2'))){var u=S.url,k=S.key;S=d;S.url=u;S.key=k;norm();save();render()}}catch(e){alert('✖')}};r.readAsText(f)}
+function csvH(){var q=function(v){return'"'+String(v==null?'':v).replace(/"/g,'""')+'"'};dl('households.csv','\ufeff'+[['Name','Ward','Voters','Category','Visits','Voted','Phone','Note']].concat(S.hh.map(function(h){return[h.name,h.w,h.n,h.c,h.v,h.voted?'YES':'',h.p,h.note]})).map(function(r){return r.map(q).join(',')}).join('\n'),'text/csv')}
+function bulkCard(){return'<div class="card"><label style="margin-top:0">📋 '+t('bulk')+'</label><textarea id="bl" rows="4"></textarea><button class="btn alt" style="margin-top:10px" onclick="impH()">'+t('imp')+'</button></div>'}
+function impH(){var n=0;g('bl').split('\n').forEach(function(l){var a=l.split(/[,\t;]/).map(function(x){return x.trim()});if(!a[0])return;S.hh.push({id:nid()+n,name:a[0],w:Math.min(S.p.wd,Math.max(1,+a[1]||1)),n:+a[2]||1,p:a[3]||'',sl:a[4]||'',note:'',c:'C',v:0,voted:false});n++});if(n){save();alert(n+' '+t('imped'));render()}}
+function ui(){var e=document.activeElement.tagName;if(e!=='INPUT'&&e!=='TEXTAREA'&&e!=='SELECT')render()}
+function pay(){return JSON.stringify({key:S.key,mod:S.mod,p:S.p,hh:S.hh,team:S.team,exp:S.exp,limit:S.limit,date:S.date,chk:S.chk,g:S.g,gd:Object.keys(S.g).filter(function(k){return S.g[k]}).length,d:Object.assign({},S.d,{photo:0,symg:0}),rate:S.rate})}
+function push(){if(!S.url)return;SY=t('syn');fetch(S.url,{method:'POST',headers:{'Content-Type':'text/plain'},body:pay()}).then(function(r){return r.json()}).then(function(j){if(j.ok){S.dirty=0;persist();SY='✔ '+t('ok')+' '+new Date().toLocaleTimeString('en-IN')}else SY=t('badkey');ui()}).catch(function(){SY='⚠ '+t('off');ui()})}
+function apply(d){var u=S.url,k=S.key,lg=S.lang,pn=S.pin,lo=S.log,ph=S.d.photo,sy=S.d.symg;S=Object.assign(S,d);S.url=u;S.key=k;S.lang=lg;S.pin=pn;S.log=lo;S.d=Object.assign({},S.d,{photo:ph,symg:sy});norm();S.mod=d.mod||Date.now();S.dirty=0;persist();render()}
+function chk(){if(!S.url)return;fetch(S.url+'?key='+encodeURIComponent(S.key)).then(function(r){return r.json()}).then(function(d){if(d&&d.p&&(d.mod||0)>(S.mod||0)){if(confirm(t('newer')))apply(d)}else if(S.dirty)push()}).catch(function(){})}
+function pull(){if(!S.url||!confirm(t('conf2')))return;fetch(S.url+'?key='+encodeURIComponent(S.key)).then(function(r){return r.json()}).then(function(d){if(d&&d.p)apply(d);else{SY=t('badkey');ui()}}).catch(function(){SY='⚠ '+t('off');ui()})}
+load();render();lock();chk();window.addEventListener('online',function(){if(S.dirty)push()});setInterval(function(){if(S.dirty&&S.url&&navigator.onLine!==false)push()},60000);
+</script><script>
+var CONTACT_WA='919948680017'; // <-- put your WhatsApp number with country code, digits only, e.g. '919XXXXXXXXX'
+function landEl(){return document.getElementById('land')}
+function goApp(){landEl().style.display='none';window.scrollTo(0,0)}
+function landLang(){var l=document.documentElement.getAttribute('data-ll')==='en'?'te':'en';document.documentElement.setAttribute('data-ll',l);S.lang=l;persist();render()}
+function loadDemo(){
+ var d=new Date();d.setDate(d.getDate()+14);
+ var iso=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+ var P=defP();P.opp=['Sample Opponent A','Sample Opponent B',''];P.bg='Sample candidate: school teacher, 10 years of community work.';P.res=0;P.pop=2400;
+ var R=[['Appala Naidu',1,4,'A',3,'12'],['Satyavathi',1,3,'A',2,'30'],['Ramana Murthy',1,5,'B',1,'55'],['Lakshmi Devi',1,2,'D',1,'90'],
+  ['Venkata Rao',2,4,'A',3,'160'],['Parvathi',2,3,'B',2,'190'],['Suri Babu',2,5,'C',1,'230'],['Kameswari',2,2,'A',2,'270'],
+  ['Gopala Krishna',3,4,'B',1,'310'],['Narasamma',3,3,'C',0,'350'],['Chinna Rao',3,5,'A',3,'400'],['Mahalakshmi',3,2,'C',0,'430'],
+  ['Eswara Rao',4,4,'A',2,'460'],['Sarada',4,3,'B',1,'500'],['Polaraju',4,5,'C',0,'540'],['Venkamma',4,2,'D',1,'580']];
+ S.hh=[];S.log=[];
+ R.forEach(function(r,i){var id=nid()+i;S.hh.push({id:id,name:r[0],w:r[1],n:r[2],p:'',note:'',sl:r[5],c:r[3],v:r[4],voted:false});
+  for(var k=0;k<r[4];k++)S.log.push({id:id,t:Date.now()-(i*7+k)*600000})});
+ S.p=P;S.date=iso;S.limit=150000;S.d={n:'Sample Candidate'};
+ S.team=[{id:nid()+50,n:'Sample Volunteer',p:'',w:1,r:'Booth agent'}];
+ var td=new Date().toLocaleDateString('en-IN');
+ S.exp=[{id:nid()+60,a:3500,n:'Pamphlet printing',d:td},{id:nid()+61,a:1200,n:'Auto hire',d:td},{id:nid()+62,a:800,n:'Tea & snacks',d:td}];
+ view='home';save();render();goApp()}
+(function(){
+ var c=document.getElementById('contact');
+ if(CONTACT_WA){c.href='https://wa.me/'+CONTACT_WA+'?text='+encodeURIComponent('నమస్కారం, My Election Assistant డెమో చూశాను. నా పంచాయతీ కోసం కావాలి.');c.style.display='block'}
+ document.documentElement.setAttribute('data-ll',S.lang==='en'?'en':'te');
+ if(S.p)goApp();
+})();
+</script></body></html>
